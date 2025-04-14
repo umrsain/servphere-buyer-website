@@ -18,7 +18,7 @@ export default function SearchBar() {
 
         const fetchData = async () => {
             let res = fetch("/api/search", {
-                method : "GET",
+                method : "POST",
                 body : JSON.stringify({
                     user_input : input
                 })

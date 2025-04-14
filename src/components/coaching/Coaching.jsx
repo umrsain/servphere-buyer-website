@@ -70,7 +70,7 @@ export default function Coaching({store_id, service_id}) {
           
       [
           '/api/getAllBookings',
-          "dd1ca28c-5cb2-429a-8619-8003822e20bf",
+          service_id,
           DateTime.fromJSDate(date).toFormat('yyyy-MM-dd'),   
       ],
   
@@ -79,8 +79,6 @@ export default function Coaching({store_id, service_id}) {
           refreshInterval: 5000
       })
   
-      console.log(data)
-
       const handleChange = (e) => {
         setMessage(e.target.value)
     }
