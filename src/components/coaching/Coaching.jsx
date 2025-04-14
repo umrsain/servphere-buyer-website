@@ -19,13 +19,11 @@ import { useRouter } from "next/navigation"
 const fetcher = ([url, service_id, date]) =>
   fetch(url, {
     method: "POST",
-    body: JSON.stringify(
-      {
-        service_id: service_id,
-        date: date,
-      },
-      { cache: "no-store" },
-    ),
+    body: JSON.stringify({
+      service_id: service_id,
+      date: date,
+    }),
+    cache: "no-store",
   }).then((res) => res.json())
 export default function Coaching({ store_id, service_id }) {
   const router = useRouter()
@@ -97,19 +95,16 @@ export default function Coaching({ store_id, service_id }) {
 
       <div>
         <div className="grid grid-cols-3 mt-5 gap-3">
-          {timeSlots.length <= 0
+          {timeSlots.length <= 0 || !date || timeSlots[date.getDay()] === undefined
             ? null
             : timeSlots[date.getDay()]?.map((slot, index_) => (
-                <>
-                  {data?.find((booking) => booking.startTime === slot.start || booking.endTime === slot.end) ? null : (
-                    <div
-                      onClick={() => setIndex(index_)}
-                      className={`flex font-medium items-center text-center justify-center rounded-md hover:opacity-60 ${index >= 0 && index === index_ ? `bg-red-400/75` : "bg-gray-200/75"} bg-gray-200/75 h-10 w-32 text-[9px] ${index >= 0 && index === index_ ? "text-white" : "text-gray-500"} text-gray-500`}
-                    >
-                      {`${slot.start}-${slot.end}`}
-                    </div>
-                  )}
-                </>
+                <div
+                  key={index_}
+                  onClick={() => setIndex(index_)}
+                  className={`flex font-medium items-center text-center justify-center rounded-md hover:opacity-60 ${index >= 0 && index === index_ ? `bg-red-400/75` : "bg-gray-200/75"} bg-gray-200/75 h-10 w-32 text-[9px] ${index >= 0 && index === index_ ? "text-white" : "text-gray-500"} text-gray-500`}
+                >
+                  {`${slot.start}-${slot.end}`}
+                </div>
               ))}
         </div>
 
