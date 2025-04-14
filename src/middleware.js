@@ -14,15 +14,17 @@ export default async function middleware(request){
 
      // Check if the path is exactly a UUID and nothing else
   if (UUID_REGEX.test(path) && !path.includes('/')) {
-    console.log('Path is a store ID:', path)
 
     try{
+
+        console.log("REACHED HERE SUPPOSED TO ADD TO DB")
         analytics.track("page-view",{
             page: `/${path}`,
 
         })        
     } catch(error) {
         // RUN SILENTLY
+        console.log("ERROR BLOCK")
         console.log(error)
     }
     
