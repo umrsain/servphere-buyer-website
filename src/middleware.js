@@ -1,7 +1,37 @@
+import { analytics } from "@/utils/analytics";
 
 
+// UUID regex pattern
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 
-export default async function middleware(req){
+export default async function middleware(request){
+
+      // Get the pathname from the URL
+  const pathname = request.nextUrl.pathname
+  
+  // Remove leading slash to get the path segment
+  const path = pathname.startsWith('/') ? pathname.substring(1) : pathname
+
+     // Check if the path is exactly a UUID and nothing else
+  if (UUID_REGEX.test(path) && !path.includes('/')) {
+    console.log('Path is a store ID:', path)
+
+    try{
+        analytics.track("page-view",{
+            page: `/${path}`,
+
+        })        
+    } catch(error) {
+        // RUN SILENTLY
+        console.log(error)
+    }
+    
+    // Your logic for when the path is exactly a store ID
+    // For example, you might want to rewrite the request or add headers
+    
+    // Example: rewrite to a store page
+    // return NextResponse.rewrite(new URL(`/store/${path}`, request.url))
+  }
   /*
    
     console.log("TRACKING");
