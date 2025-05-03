@@ -17,7 +17,7 @@ export default function SearchBar() {
     useEffect(()=> {
 
         const fetchData = async () => {
-            let res = fetch("/api/search", {
+            let res = await fetch("/api/search", {
                 method : "POST",
                 body : JSON.stringify({
                     user_input : input
@@ -26,8 +26,9 @@ export default function SearchBar() {
     
             res = await res.json()
 
+            console.log(res)
             // SET SEARCH RESULTS STATE VARIABLE
-            setSearchResults(res)
+            //setSearchResults(res)
         }
 
         // call the function
